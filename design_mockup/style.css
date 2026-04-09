@@ -1,0 +1,165 @@
+/* style.css - Dark glassmorphism UI for Forecasting & Alerts mockup */
+:root {
+  --bg-color: #0a0a0a;
+  --primary: #7f5af0; /* vibrant accent */
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-blur: 12px;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --border-radius: 12px;
+  --transition: 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.nav-btn.active, .nav-btn:hover {
+  color: var(--primary);
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section {
+  display: none;
+}
+.section.visible {
+  display: block;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  backdrop-filter: blur(var(--card-blur));
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+.chart-card {
+  position: relative;
+}
+
+.toggle-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.toggle-btn {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.toggle-btn.active, .toggle-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+.three-columns {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.appliance-card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.appliance-card .value {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.banner-card, .cost-card, .insight-card {
+  margin-top: 1rem;
+}
+
+.alerts-group {
+  margin-top: 1.5rem;
+}
+.alerts-group h3 {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.alert-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  border-left: 4px solid;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+}
+.alert-card .icon {
+  font-size: 1.2rem;
+}
+.alert-card.critical { border-color: #ff4d4f; }
+.alert-card.warning { border-color: #ffa940; }
+.alert-card.suggestion { border-color: #40a9ff; }
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items flex-start;
+  }
+  .nav {
+    margin-top: 0.5rem;
+  }
+}

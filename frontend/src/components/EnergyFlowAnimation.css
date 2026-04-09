@@ -1,0 +1,60 @@
+/* ── Diagonal Circuit Pulse ── */
+.diag-circuit {
+  stroke-dasharray: 200 1800;
+  stroke-dashoffset: 2000;
+  animation: diagCircuit 7s linear infinite;
+}
+@keyframes diagCircuit {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── Primary Diagonal Wave ── */
+.diag-wave-primary {
+  stroke-dasharray: 800 1200;
+  stroke-dashoffset: 2000;
+  animation: diagWavePrimary 5s linear infinite;
+}
+@keyframes diagWavePrimary {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── Secondary Diagonal Wave (reverse) ── */
+.diag-wave-secondary {
+  stroke-dasharray: 500 1500;
+  stroke-dashoffset: -2000;
+  animation: diagWaveSecondary 6s linear infinite;
+}
+@keyframes diagWaveSecondary {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── Tertiary Accent Wave ── */
+.diag-wave-tertiary {
+  stroke-dasharray: 300 1700;
+  stroke-dashoffset: 2000;
+  animation: diagWaveTertiary 8s linear infinite 1s;
+}
+@keyframes diagWaveTertiary {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── Lightning Arc 1 ── */
+.diag-lightning-1 {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: lightningFlash 7s infinite 1s;
+}
+
+/* ── Lightning Arc 2 ── */
+.diag-lightning-2 {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: lightningFlash 9s infinite 4s;
+}
+
+@keyframes lightningFlash {
+  0%   { stroke-dashoffset: 200; opacity: 1; }
+  4%   { stroke-dashoffset: 0;   opacity: 1; }
+  7%   { opacity: 0; }
+  100% { opacity: 0; }
+}

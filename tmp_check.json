@@ -1,0 +1,452 @@
+﻿[
+    {
+        "date": "2026-03-09",
+        "total_kwh": 64.55,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 59.69
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.5% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-10",
+        "total_kwh": 63.39,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 58.53
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-11",
+        "total_kwh": 62.81,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 58.0
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-12",
+        "total_kwh": 62.3,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.49
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-13",
+        "total_kwh": 62.74,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.93
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-14",
+        "total_kwh": 69.54,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 64.68
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 93.0% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-15",
+        "total_kwh": 70.31,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 65.45
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 93.1% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-16",
+        "total_kwh": 62.44,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.63
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-17",
+        "total_kwh": 62.38,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.52
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.2% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-18",
+        "total_kwh": 61.87,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.18
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.4% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-19",
+        "total_kwh": 62.57,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.76
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-20",
+        "total_kwh": 63.9,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 59.04
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.4% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-21",
+        "total_kwh": 77.49,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 72.65
+        },
+        "is_anomaly": true,
+        "insight": "Unusually high day â Lights & Others drove 93.7% of total consumption, well above your average."
+    },
+    {
+        "date": "2026-03-22",
+        "total_kwh": 77.47,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 72.61
+        },
+        "is_anomaly": true,
+        "insight": "Unusually high day â Lights & Others drove 93.7% of total consumption, well above your average."
+    },
+    {
+        "date": "2026-03-23",
+        "total_kwh": 73.76,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 68.9
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 93.4% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-24",
+        "total_kwh": 62.41,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.55
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.2% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-25",
+        "total_kwh": 62.75,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 57.89
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-26",
+        "total_kwh": 64.3,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 59.44
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.4% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-27",
+        "total_kwh": 63.45,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 58.59
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-28",
+        "total_kwh": 70.13,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 65.27
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 93.1% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-29",
+        "total_kwh": 72.65,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 67.79
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 93.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-30",
+        "total_kwh": 64.06,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 59.2
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.4% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-03-31",
+        "total_kwh": 72.72,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 67.86
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 93.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-04-01",
+        "total_kwh": 64.04,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 59.18
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.4% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-04-02",
+        "total_kwh": 63.03,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 58.17
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-04-03",
+        "total_kwh": 64.77,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 59.91
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.5% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-04-04",
+        "total_kwh": 68.59,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 63.73
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.9% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-04-05",
+        "total_kwh": 71.85,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 67.04
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 93.3% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-04-06",
+        "total_kwh": 64.33,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 1.26,
+            "Fridge": 3.6,
+            "Lights & Others": 59.47
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 92.4% of total. Consider switching to LEDs for easy savings."
+    },
+    {
+        "date": "2026-04-07",
+        "total_kwh": 8.45,
+        "appliances": {
+            "AC": 0.0,
+            "Geyser": 0.0,
+            "Washing Machine": 0.0,
+            "TV": 0.0,
+            "Fan": 0.14,
+            "Fridge": 1.2,
+            "Lights & Others": 7.11
+        },
+        "is_anomaly": false,
+        "insight": "Lights contributed nearly 84.1% of total. Consider switching to LEDs for easy savings."
+    }
+]

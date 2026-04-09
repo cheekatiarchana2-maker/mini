@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electricity Consumption Dashboard – Forecasting & Alerts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1>⚡ Electricity Consumption Dashboard</h1>
+        <nav class="nav">
+            <button class="nav-btn active" data-section="forecast">Forecasting</button>
+            <button class="nav-btn" data-section="alerts">Alerts</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Forecasting Section -->
+        <section id="forecast" class="section visible">
+            <div class="card glass chart-card">
+                <div class="card-header">
+                    <h2>Future Consumption</h2>
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" data-range="hourly">Hourly</button>
+                        <button class="toggle-btn" data-range="daily">Daily</button>
+                        <button class="toggle-btn" data-range="weekly">Weekly</button>
+                    </div>
+                </div>
+                <canvas id="forecastChart" height="150"></canvas>
+            </div>
+
+            <div class="grid three-columns">
+                <div class="card glass appliance-card" data-appliance="AC">
+                    <h3>AC</h3>
+                    <p class="value">2.4 kWh</p>
+                </div>
+                <div class="card glass appliance-card" data-appliance="Fridge">
+                    <h3>Fridge</h3>
+                    <p class="value">1.1 kWh</p>
+                </div>
+                <div class="card glass appliance-card" data-appliance="Washing Machine">
+                    <h3>Washing Machine</h3>
+                    <p class="value">0.9 kWh</p>
+                </div>
+            </div>
+
+            <div class="card glass banner-card">
+                <h3>Peak Usage Prediction</h3>
+                <p>⚡ Peak usage expected at <strong>8 PM tomorrow</strong></p>
+                <p>📅 Highest consumption day: <strong>Sunday</strong></p>
+            </div>
+
+            <div class="card glass cost-card">
+                <h3>Cost Estimation</h3>
+                <p>Next week: <strong>$12.45</strong> (↑ 8 % vs previous week)</p>
+                <p>Next month: <strong>$48.20</strong> (↓ 3 % vs previous month)</p>
+            </div>
+
+            <div class="card glass insight-card">
+                <h3>Future Insight</h3>
+                <ul>
+                    <li>⚡ Electricity usage will increase by <strong>12 %</strong> next week.</li>
+                    <li>❄️ AC will contribute <strong>60 %</strong> of total consumption tomorrow.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Alerts Section -->
+        <section id="alerts" class="section hidden">
+            <h2 class="section-title">🔔 Alerts</h2>
+            <div class="alerts-group">
+                <h3>Forecast‑based Alerts</h3>
+                <div class="alert-card critical">
+                    <span class="icon">🔴</span>
+                    <p>High electricity usage expected tomorrow evening.</p>
+                </div>
+                <div class="alert-card warning">
+                    <span class="icon">🟠</span>
+                    <p>Your bill may increase by 15 % this week.</p>
+                </div>
+                <div class="alert-card suggestion">
+                    <span class="icon">🔵</span>
+                    <p>Consider reducing AC usage after 7 PM to save $3.</p>
+                </div>
+            </div>
+            <div class="alerts-group">
+                <h3>Anomaly‑based Alerts</h3>
+                <div class="alert-card critical">
+                    <span class="icon">🔴</span>
+                    <p>Unusual spike detected yesterday at 9 PM.</p>
+                </div>
+                <div class="alert-card warning">
+                    <span class="icon">🟠</span>
+                    <p>Abnormal AC usage detected.</p>
+                </div>
+                <div class="alert-card suggestion">
+                    <span class="icon">🔵</span>
+                    <p>Check appliance connections for possible faults.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

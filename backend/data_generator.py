@@ -18,41 +18,65 @@ def generate_synthetic_data(file_path="electricity_data.csv", days=365):
     daily_pattern += np.where((hour >= 1) & (hour <= 5), -0.3, 0) # Night drop
     
     # Appliances Rules (for Apriori)
-    # AC on when temp is hot (summer months)
+    # AC: Indian summer — March through October, afternoon/evening hours
     month = np.array([d.month for d in dates])
-    ac_usage = np.where(np.isin(month, [6, 7, 8]) & (hour >= 14) & (hour <= 18), 3.0, 0)
-    
-    # Heater usage
-    heater_usage = np.where(np.isin(month, [1, 2, 12]) & (hour >= 19) & (hour <= 23), 2.5, 0)
-    
-    # Weekly patterns
+    ac_usage = np.where(
+        np.isin(month, [3, 4, 5, 6, 7, 8, 9, 10]) & (hour >= 13) & (hour <= 23), 2.0, 0
+    )
+    # Heater/Geyser: morning in winter (Nov–Feb), and also morning all year (water heater)
+    heater_usage = np.where(
+        (hour >= 6) & (hour <= 9), 1.5, 0  # morning geyser every day
+    )
+    heater_usage += np.where(
+        np.isin(month, [11, 12, 1, 2]) & (hour >= 19) & (hour <= 23), 1.0, 0  # room heater in winter evenings
+    )
+
+    # Fan: active most of the day outside deep night
+    fan_usage = np.where((hour >= 6) & (hour <= 23), 0.07, 0)  # ~70W fan
+
+    # Fridge: constant ~150W background load
+    fridge_usage = np.full(len(dates), 0.15)
+
+    # TV: evening usage randomly on
+    tv_usage = np.where(
+        (hour >= 18) & (hour <= 23) & (np.random.random(len(dates)) > 0.4), 0.15, 0
+    )
+
+    # Washing Machine: weekends, mid-morning
     weekday = np.array([d.weekday() for d in dates])
-    weekend_bump = np.where(np.isin(weekday, [5, 6]) & (hour >= 10) & (hour <= 16), 1.0, 0)
-    
+    wm_usage = np.where(
+        np.isin(weekday, [5, 6]) & (hour >= 9) & (hour <= 13), 0.8, 0
+    ) * (np.random.random(len(dates)) > 0.5).astype(float)
+
+    # Weekly patterns
+    weekend_bump = np.where(np.isin(weekday, [5, 6]) & (hour >= 12) & (hour <= 18), 0.8, 0)
+
     # Anomalies
     anomalies = np.zeros(len(dates))
     anomaly_indices = np.random.choice(len(dates), size=int(len(dates)*0.01), replace=False)
-    anomalies[anomaly_indices] += np.random.uniform(5.0, 10.0, len(anomaly_indices)) 
-    
+    anomalies[anomaly_indices] += np.random.uniform(5.0, 10.0, len(anomaly_indices))
+
     # Total consumption
-    consumption = base_load + daily_pattern + ac_usage + heater_usage + weekend_bump + anomalies
-    
+    consumption = base_load + daily_pattern + ac_usage + heater_usage + fan_usage + fridge_usage + tv_usage + wm_usage + weekend_bump + anomalies
+
     # Add noise
     consumption += np.random.normal(0, 0.2, len(dates))
-    
+
     # Ensure positive
     consumption = np.maximum(consumption, 0.1)
 
     # Some missing values
     missing_indices = np.random.choice(len(dates), size=int(len(dates)*0.005), replace=False)
-    
+
     df = pd.DataFrame({
         "timestamp": dates,
         "consumption_kwh": consumption,
         "ac_active": (ac_usage > 0).astype(int),
         "heater_active": (heater_usage > 0).astype(int),
-        "tv_active": (np.random.random(len(dates)) > 0.7).astype(int),
-        "washing_machine_active": ((hour >= 10) & (hour <= 14) & np.isin(weekday, [5,6])).astype(int)
+        "tv_active": (tv_usage > 0).astype(int),
+        "washing_machine_active": (wm_usage > 0).astype(int),
+        "fan_active": (fan_usage > 0).astype(int),
+        "fridge_active": np.ones(len(dates), dtype=int),
     })
     
     # Mask missing
