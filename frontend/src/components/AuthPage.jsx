@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Lock, Phone, CheckCircle2, Zap, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import EnergyBackground from './EnergyBackground';
-import { registerUser, loginUser } from '../api';
 
 export default function AuthPage({ onAuthSuccess }) {
     const [mode, setMode] = useState('login'); // 'login' or 'signup'
@@ -10,59 +9,47 @@ export default function AuthPage({ onAuthSuccess }) {
     const [showPassword, setShowPassword] = useState(false);
     const [phone, setPhone] = useState('');
     const [consent, setConsent] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     
     const [statusMessage, setStatusMessage] = useState({ type: '', text: '' });
 
-    // Handle Signup — calls POST /register
-    const handleSignup = async () => {
+    // Handle Signup
+    const handleSignup = () => {
         if (!email || !password || !phone) {
             setStatusMessage({ type: 'error', text: 'Please fill in all fields.' });
             return;
         }
         if (!consent) {
-            setStatusMessage({ type: 'error', text: 'Please agree to receive alerts.' });
+            setStatusMessage({ type: 'error', text: 'Please agree to received alerts.' });
             return;
         }
 
-        setIsLoading(true);
-        try {
-            await registerUser({ email, password, phone });
-            setStatusMessage({ type: 'success', text: 'Account created successfully. Please log in to continue.' });
-
-            // Clear fields and switch to login after delay
-            setTimeout(() => {
-                setMode('login');
-                setStatusMessage({ type: '', text: '' });
-                setPassword('');
-            }, 2500);
-        } catch (err) {
-            const detail = err.response?.data?.detail || 'Registration failed. Please try again.';
-            setStatusMessage({ type: 'error', text: detail });
-        } finally {
-            setIsLoading(false);
-        }
+        const userData = { email, password, phone };
+        localStorage.setItem('electra_user', JSON.stringify(userData));
+        
+        setStatusMessage({ type: 'success', text: 'Account created successfully. Please log in to continue.' });
+        
+        // Clear fields and switch to login after delay
+        setTimeout(() => {
+            setMode('login');
+            setStatusMessage({ type: '', text: '' });
+            setPassword(''); // Clear password for security
+        }, 2500);
     };
 
-    // Handle Login — calls POST /login
-    const handleLogin = async () => {
-        if (!email || !password) {
-            setStatusMessage({ type: 'error', text: 'Please enter email and password.' });
+    // Handle Login
+    const handleLogin = () => {
+        const storedUser = JSON.parse(localStorage.getItem('electra_user'));
+
+        if (!storedUser) {
+            setStatusMessage({ type: 'error', text: 'No account found. Please sign up first.' });
             return;
         }
 
-        setIsLoading(true);
-        try {
-            const data = await loginUser({ email, password });
-            // Store the JWT token (NOT plaintext password)
-            localStorage.setItem('electra_token', data.access_token);
+        if (email === storedUser.email && password === storedUser.password) {
             setStatusMessage({ type: 'success', text: 'Login successful. Accessing dashboard...' });
-            setTimeout(() => onAuthSuccess(data.user), 1000);
-        } catch (err) {
-            const detail = err.response?.data?.detail || 'Invalid email or password.';
-            setStatusMessage({ type: 'error', text: detail });
-        } finally {
-            setIsLoading(false);
+            setTimeout(() => onAuthSuccess(), 1000);
+        } else {
+            setStatusMessage({ type: 'error', text: 'Invalid email or password.' });
         }
     };
 
@@ -184,19 +171,9 @@ export default function AuthPage({ onAuthSuccess }) {
                                     <span className="text-xs font-bold text-white/40 group-hover:text-white/60 transition-colors">I agree to receive energy alerts via SMS</span>
                                 </label>
 
-                                <button 
-                                    onClick={handleSignup} 
-                                    disabled={isLoading}
-                                    className="btn-neon btn-neon-blue mt-4 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {isLoading ? (
-                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                                    ) : (
-                                        <>
-                                            Create Account
-                                            <CheckCircle2 size={18} className="transition-transform group-hover:scale-110" />
-                                        </>
-                                    )}
+                                <button onClick={handleSignup} className="btn-neon btn-neon-blue mt-4 flex items-center justify-center gap-2 group">
+                                    Create Account
+                                    <CheckCircle2 size={18} className="transition-transform group-hover:scale-110" />
                                 </button>
                             </div>
                         ) : (
@@ -242,19 +219,9 @@ export default function AuthPage({ onAuthSuccess }) {
                                     </button>
                                 </div>
 
-                                <button 
-                                    onClick={handleLogin} 
-                                    disabled={isLoading}
-                                    className="btn-neon btn-neon-purple mt-8 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {isLoading ? (
-                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                                    ) : (
-                                        <>
-                                            Access Dashboard
-                                            <Zap size={18} className="transition-transform group-hover:scale-110" />
-                                        </>
-                                    )}
+                                <button onClick={handleLogin} className="btn-neon btn-neon-purple mt-8 flex items-center justify-center gap-2 group">
+                                    Access Dashboard
+                                    <Zap size={18} className="transition-transform group-hover:scale-110" />
                                 </button>
                             </div>
                         )}

@@ -1,43 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { IndianRupee, BellRing, Target, Activity, Loader2 } from 'lucide-react';
-import { fetchBillStatus } from '../api';
+import { IndianRupee, BellRing, Target, Activity } from 'lucide-react';
 
 export default function BillEstimate() {
     const [animatedSpend, setAnimatedSpend] = useState(0);
-    const [data, setData] = useState({ current_spend: 0, budget_limit: 3500, projected_spend: 0 });
-    const [loading, setLoading] = useState(true);
+    const budgetLimit = 3500;
+    const currentSpend = 2850;
     
-    useEffect(() => {
-        const loadBill = async () => {
-            try {
-                const res = await fetchBillStatus();
-                setData(res);
-                // Trigger animation after data loads
-                const usagePercentage = Math.min(100, (res.current_spend / res.budget_limit) * 100);
-                setTimeout(() => setAnimatedSpend(usagePercentage), 400);
-            } catch (err) {
-                console.error("Failed to fetch bill status:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadBill();
-    }, []);
-
-    const usagePercentage = Math.min(100, (data.current_spend / data.budget_limit) * 100);
+    // Calculate percentage (max 100% for circle fill)
+    const usagePercentage = Math.min(100, (currentSpend / budgetLimit) * 100);
     
     // Circle math
     const radius = 60;
     const circumference = 2 * Math.PI * radius;
     const strokeDashoffset = circumference - (circumference * animatedSpend) / 100;
 
-    if (loading) {
-        return (
-            <div className="bg-slate-900 rounded-[2.5rem] border border-slate-800 p-8 flex items-center justify-center min-h-[400px]">
-                <Loader2 className="text-indigo-500 animate-spin" size={40} />
-            </div>
-        );
-    }
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setAnimatedSpend(usagePercentage);
+        }, 400);
+        return () => clearTimeout(timer);
+    }, [usagePercentage]);
 
     return (
         <div className="bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-xl p-8 lg:p-10 flex flex-col h-full animate-in zoom-in-[0.98] duration-500 relative overflow-hidden">
@@ -78,9 +60,9 @@ export default function BillEstimate() {
 
                     {/* Inner Text Status */}
                     <div className="absolute flex flex-col items-center justify-center text-center">
-                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 shadow-sm">{data.month_name} Spend</span>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 shadow-sm">Total Spend</span>
                         <span className="text-3xl font-black text-white tracking-tighter shadow-xl">
-                            ₹{data.current_spend}
+                            ₹{currentSpend}
                         </span>
                     </div>
                 </div>
@@ -99,18 +81,18 @@ export default function BillEstimate() {
             <div className="mt-8 relative z-10 border-t border-slate-800 pt-6 space-y-4">
                 <div className="flex justify-between items-center text-sm">
                     <span className="font-bold text-slate-500">Monthly Ceiling Limit</span>
-                    <span className="font-black text-slate-200">₹{data.budget_limit}</span>
+                    <span className="font-black text-slate-200">₹{budgetLimit}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                     <span className="font-bold text-slate-500">Remaining Balance</span>
-                    <span className={`font-black ${data.budget_limit - data.current_spend < 500 ? 'text-rose-400' : 'text-emerald-400'}`}>
-                        ₹{Math.max(0, data.budget_limit - data.current_spend)}
+                    <span className={`font-black ${budgetLimit - currentSpend < 500 ? 'text-rose-400' : 'text-emerald-400'}`}>
+                        ₹{Math.max(0, budgetLimit - currentSpend)}
                     </span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                     <span className="font-bold text-slate-500">Projected Final Spend</span>
                     <span className="font-black text-indigo-400 flex items-center gap-1">
-                        <Activity size={14} /> ₹{data.projected_spend}
+                        <Activity size={14} /> ₹3450
                     </span>
                 </div>
             </div>

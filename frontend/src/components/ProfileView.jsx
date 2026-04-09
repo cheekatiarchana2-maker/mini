@@ -1,67 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { User, Mail, Phone, Lock, LogOut, Save, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { fetchProfile, updateProfile } from '../api';
 
 export default function ProfileView({ onSignOut }) {
-    const [user, setUser] = useState({ email: '', phone: '', username: '' });
+    const [user, setUser] = useState({ email: '', phone: '', password: '' });
     const [isEditing, setIsEditing] = useState(false);
     const [showPasswordChange, setShowPasswordChange] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [saveStatus, setSaveStatus] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
 
-    // Load profile from backend on mount
     useEffect(() => {
-        const loadProfile = async () => {
-            try {
-                const profile = await fetchProfile();
-                setUser(profile);
-            } catch (err) {
-                setError('Failed to load profile.');
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadProfile();
+        const storedUser = JSON.parse(localStorage.getItem('electra_user'));
+        if (storedUser) setUser(storedUser);
     }, []);
 
-    const handleSave = async () => {
-        try {
-            const updates = {};
-            if (user.email) updates.email = user.email;
-            if (user.phone !== undefined) updates.phone = user.phone;
-            if (showPasswordChange && newPassword) updates.password = newPassword;
-
-            const updatedUser = await updateProfile(updates);
-            setUser(updatedUser);
-            setIsEditing(false);
-            setShowPasswordChange(false);
-            setNewPassword('');
-            setSaveStatus(true);
-            setError('');
-            setTimeout(() => setSaveStatus(false), 3000);
-        } catch (err) {
-            const detail = err.response?.data?.detail || 'Failed to update profile.';
-            setError(detail);
+    const handleSave = () => {
+        const updatedUser = { ...user };
+        if (showPasswordChange && newPassword) {
+            updatedUser.password = newPassword;
         }
+        localStorage.setItem('electra_user', JSON.stringify(updatedUser));
+        setUser(updatedUser);
+        setIsEditing(false);
+        setShowPasswordChange(false);
+        setNewPassword('');
+        setSaveStatus(true);
+        setTimeout(() => setSaveStatus(false), 3000);
     };
 
-    const handleSignOut = () => {
-        localStorage.removeItem('electra_token');
-        onSignOut();
-    };
-
-    const displayName = user.username || (user.email ? user.email.split('@')[0] : 'User');
-
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center h-[60vh] flex-col gap-4">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-                <p className="text-slate-400 font-bold animate-pulse">Loading profile...</p>
-            </div>
-        );
-    }
+    const displayName = user.email ? user.email.split('@')[0] : 'User';
 
     return (
         <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 pb-16">
@@ -75,13 +41,6 @@ export default function ProfileView({ onSignOut }) {
                     Manage Your Account and Security
                 </p>
             </div>
-
-            {/* Error Banner */}
-            {error && (
-                <div className="mb-6 px-6 py-4 rounded-2xl border bg-rose-500/10 border-rose-500/50 text-rose-400 text-sm font-black uppercase tracking-widest text-center animate-in fade-in">
-                    {error}
-                </div>
-            )}
 
             {/* Main Vertical Rectangle Box */}
             <div className="neon-card neon-border-purple neon-glow-purple flex flex-col items-center gap-0 overflow-hidden">
@@ -102,7 +61,7 @@ export default function ProfileView({ onSignOut }) {
                         <div className="flex items-center justify-center gap-1.5 mt-1.5">
                             <ShieldCheck size={11} className="text-purple-400" />
                             <p className="text-[10px] font-black text-purple-400/70 uppercase tracking-[0.2em]">
-                                Energy Consumer ID: EH-{user.id ? String(user.id).padStart(4, '0') : '0000'}
+                                Energy Consumer ID: EH-9921
                             </p>
                         </div>
                     </div>
@@ -144,7 +103,7 @@ export default function ProfileView({ onSignOut }) {
                             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-400 transition-colors" size={16} />
                             <input
                                 type="tel"
-                                value={user.phone || ''}
+                                value={user.phone}
                                 disabled={!isEditing}
                                 onChange={(e) => setUser({ ...user, phone: e.target.value })}
                                 className={`w-full pl-12 neon-input text-sm ${isEditing ? 'neon-input-blue' : 'opacity-60 cursor-not-allowed'}`}
@@ -210,7 +169,7 @@ export default function ProfileView({ onSignOut }) {
                 {/* ── Sign Out Section ── */}
                 <div className="w-full px-14 py-10">
                     <button
-                        onClick={handleSignOut}
+                        onClick={onSignOut}
                         className="w-full flex items-center justify-center gap-2 py-5 rounded-2xl border border-rose-500/30 bg-rose-500/10 text-rose-400 font-black uppercase tracking-widest text-sm hover:bg-rose-500/20 hover:border-rose-500/50 hover:shadow-[0_0_20px_rgba(244,63,94,0.3)] transition-all group"
                     >
                         <LogOut size={18} className="group-hover:-translate-x-1 transition-transform" />

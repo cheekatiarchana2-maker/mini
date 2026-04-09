@@ -1,47 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import { AlertTriangle, Activity, Zap, Clock, Smartphone, ShieldAlert, AlertCircle, XCircle, Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { AlertTriangle, Activity, Zap, Clock, Smartphone, ShieldAlert, AlertCircle, XCircle } from 'lucide-react';
 import { translations } from '../translations';
-import { fetchActiveAlerts } from '../api';
 
-export default function AlertsView({ language, settings }) {
+export default function AlertsView({ language, settings = { dangerousSpikes: true, anomalyAlerts: true } }) {
     const t = translations[language] || translations.English;
-    const [alerts, setAlerts] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const loadAlerts = async () => {
-            try {
-                const data = await fetchActiveAlerts();
-                setAlerts(data);
-            } catch (err) {
-                console.error("Failed to fetch alerts:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadAlerts();
-    }, []);
+    // Manage alerts in state to allow dismissal
+    const [criticalAlerts, setCriticalAlerts] = useState([
+        { 
+            id: 'c1', 
+            type: 'ANOMALY', 
+            title: 'Dangerous Power Spike', 
+            appliance: 'Washing Machine', 
+            time: 'LIVE', 
+            impact: 'FIRE RISK DETECTED',
+            sms: true,
+            severity: 'CRITICAL'
+        },
+        { 
+            id: 'c2', 
+            type: 'ANOMALY', 
+            title: 'Unusual Idle Load', 
+            appliance: 'Refrigerator', 
+            time: '12 MINS AGO', 
+            impact: 'COMPROMISED SEAL SUSPECTED',
+            sms: false,
+            severity: 'HIGH'
+        }
+    ]);
 
-    const dismissAlert = (id) => {
-        setAlerts(prev => prev.filter(a => a.id !== id));
+    const [forecastAlerts, setForecastAlerts] = useState([
+        { 
+            id: 'f1', 
+            type: 'FORECAST', 
+            title: 'Upcoming Bill Surge', 
+            desc: 'Usage is 32% above target ceiling for this week.',
+            time: 'NEXT 4 DAYS', 
+            impact: 'POTENTIAL ₹450 PENALTY',
+            severity: 'WARNING'
+        },
+        { 
+            id: 'f2', 
+            type: 'FORECAST', 
+            title: 'High Evening Load Expected', 
+            desc: 'Usage is predicted to peak at 110% of meter capacity tonight.',
+            time: 'TODAY, 6:30 PM', 
+            impact: 'HIGH LOAD RISK',
+            severity: 'URGENT'
+        }
+    ]);
+
+    const [patternAlerts, setPatternAlerts] = useState([
+        { 
+            id: 'p1', 
+            type: 'PATTERN', 
+            title: 'Inefficiency Detected', 
+            desc: 'AC left on in vacant bedroom overnight.',
+            time: 'RECENT', 
+            impact: 'WASTE: ₹85 PER NIGHT',
+            severity: 'URGENT'
+        }
+    ]);
+
+    const [costOptAlerts, setCostOptAlerts] = useState([
+        { 
+            id: 'co1', 
+            type: 'OPTIMIZATION', 
+            title: 'Shift Usage for Savings', 
+            desc: 'Running the Washing Machine at 6 AM instead of 6 PM will avoid peak tariffs.',
+            appliance: 'Washing Machine',
+            time: 'OPPORTUNITY', 
+            impact: 'SAVE ₹120/MO',
+            severity: 'SUGGESTION'
+        }
+    ]);
+
+    const dismissAlert = (category, id) => {
+        if (category === 'critical') setCriticalAlerts(prev => prev.filter(a => a.id !== id));
+        if (category === 'forecast') setForecastAlerts(prev => prev.filter(a => a.id !== id));
+        if (category === 'pattern') setPatternAlerts(prev => prev.filter(a => a.id !== id));
+        if (category === 'costOpt') setCostOptAlerts(prev => prev.filter(a => a.id !== id));
     };
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center py-40 flex-col gap-6">
-                <Loader2 size={48} className="text-rose-500 animate-spin" />
-                <p className="text-white/20 font-black uppercase tracking-[0.3em] text-sm animate-pulse">Scanning Household Energy Feed...</p>
-            </div>
-        );
-    }
+    const visibleCriticalAlerts = criticalAlerts.filter(a => {
+        if (a.severity === 'CRITICAL') return settings.dangerousSpikes;
+        return settings.anomalyAlerts;
+    });
 
-    // Filter categories for the UI
-    const criticalAlertsList = alerts.filter(a => a.severity === 'CRITICAL' || a.severity === 'HIGH');
-    const forecastAlertsList = alerts.filter(a => a.type === 'FORECAST');
-    const patternAlertsList = alerts.filter(a => a.type === 'PATTERN');
-    const costOptAlertsList = alerts.filter(a => a.type === 'OPTIMIZATION');
-
-    const hasAnyVisible = alerts.length > 0;
+    const hasAnyVisible = visibleCriticalAlerts.length > 0 || (settings.forecastingAlerts && forecastAlerts.length > 0) || (settings.costOptimizationAlerts && costOptAlerts.length > 0) || (settings.patternAlerts && patternAlerts.length > 0);
 
     return (
         <div className="w-full space-y-16 animate-in fade-in slide-in-from-right-8 duration-700 max-w-7xl mx-auto pb-24 px-4">
@@ -73,18 +119,18 @@ export default function AlertsView({ language, settings }) {
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
                     
                     {/* 1. Critical Device Alerts & Anomaly Alerts */}
-                    {criticalAlertsList.length > 0 && (
+                    {visibleCriticalAlerts.length > 0 && (
                         <div className="space-y-8">
                             <h2 className="text-sm font-black text-white/90 tracking-[0.3em] uppercase flex items-center gap-3 px-4">
                                 <div className="alert-header-dot bg-rose-500 animate-pulse text-rose-500" />
                                 Critical Device Alerts
                             </h2>
                             <div className="space-y-6">
-                                {criticalAlertsList.map(alert => (
+                                {visibleCriticalAlerts.map(alert => (
                                     <AlertCard 
                                         key={alert.id} 
                                         alert={alert} 
-                                        onDismiss={() => dismissAlert(alert.id)}
+                                        onDismiss={() => dismissAlert('critical', alert.id)}
                                         theme="red"
                                         showSms={alert.severity === 'CRITICAL' && settings.dangerousSpikes}
                                     />
@@ -94,18 +140,18 @@ export default function AlertsView({ language, settings }) {
                     )}
 
                     {/* 2. Forecasting Alerts */}
-                    {settings.forecastingAlerts && forecastAlertsList.length > 0 && (
+                    {settings.forecastingAlerts && forecastAlerts.length > 0 && (
                         <div className="space-y-8">
                             <h2 className="text-sm font-black text-white/90 tracking-[0.3em] uppercase flex items-center gap-3 px-4">
                                 <div className="alert-header-dot bg-blue-500 text-blue-500" />
                                 Forecasting Alerts
                             </h2>
                             <div className="space-y-6">
-                                {forecastAlertsList.map(alert => (
+                                {forecastAlerts.map(alert => (
                                     <AlertCard 
                                         key={alert.id} 
                                         alert={alert} 
-                                        onDismiss={() => dismissAlert(alert.id)}
+                                        onDismiss={() => dismissAlert('forecast', alert.id)}
                                         theme="blue"
                                     />
                                 ))}
@@ -114,18 +160,18 @@ export default function AlertsView({ language, settings }) {
                     )}
 
                     {/* 3. Cost Optimization Alerts */}
-                    {settings.costOptimizationAlerts && costOptAlertsList.length > 0 && (
+                    {settings.costOptimizationAlerts && costOptAlerts.length > 0 && (
                         <div className="space-y-8">
                             <h2 className="text-sm font-black text-white/90 tracking-[0.3em] uppercase flex items-center gap-3 px-4">
                                 <div className="alert-header-dot bg-emerald-500 text-emerald-500" />
                                 Cost Optimization Alerts
                             </h2>
                             <div className="space-y-6">
-                                {costOptAlertsList.map(alert => (
+                                {costOptAlerts.map(alert => (
                                     <AlertCard 
                                         key={alert.id} 
                                         alert={alert} 
-                                        onDismiss={() => dismissAlert(alert.id)}
+                                        onDismiss={() => dismissAlert('costOpt', alert.id)}
                                         theme="green"
                                     />
                                 ))}
@@ -134,18 +180,18 @@ export default function AlertsView({ language, settings }) {
                     )}
 
                     {/* 4. Urgent Pattern Alerts */}
-                    {settings.patternAlerts && patternAlertsList.length > 0 && (
+                    {settings.patternAlerts && patternAlerts.length > 0 && (
                         <div className="space-y-8">
                             <h2 className="text-sm font-black text-white/90 tracking-[0.3em] uppercase flex items-center gap-3 px-4">
                                 <div className="alert-header-dot bg-purple-500 text-purple-500" />
                                 Urgent Pattern Alerts
                             </h2>
                             <div className="space-y-6">
-                                {patternAlertsList.map(alert => (
+                                {patternAlerts.map(alert => (
                                     <AlertCard 
                                         key={alert.id} 
                                         alert={alert} 
-                                        onDismiss={() => dismissAlert(alert.id)}
+                                        onDismiss={() => dismissAlert('pattern', alert.id)}
                                         theme="purple"
                                     />
                                 ))}
@@ -158,7 +204,6 @@ export default function AlertsView({ language, settings }) {
         </div>
     );
 }
-
 
 function AlertCard({ alert, onDismiss, theme, showSms }) {
     const themeClasses = {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Zap } from 'lucide-react';
-import { fetchData, fetchForecast, fetchPatterns, fetchAnomalies, fetchResults, fetchProfile, fetchSettings } from './api';
+import { fetchData, fetchForecast, fetchPatterns, fetchAnomalies, fetchResults } from './api';
 import Sidebar from './components/Sidebar';
 import KPICards from './components/KPICards';
 import ForecastingView from './components/ForecastingView';
@@ -23,14 +23,12 @@ function App() {
   const [language, setLanguage] = useState('English');
   const [darkMode, setDarkMode] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
   const [settings, setSettings] = useState({
-    dangerous_spikes: true,
-    anomaly_alerts: true,
-    forecasting_alerts: true,
-    pattern_alerts: true,
-    cost_optimization_alerts: true,
-    monthly_budget: 3500.0
+    dangerousSpikes: true,
+    anomalyAlerts: true,
+    forecastingAlerts: true,
+    patternAlerts: true,
+    costOptimizationAlerts: true,
   });
 
   const t = translations[language] || translations.English;
@@ -42,24 +40,6 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
-
-  // Check for existing JWT token on mount — auto-authenticate if valid
-  useEffect(() => {
-    const token = localStorage.getItem('electra_token');
-    if (token) {
-      Promise.all([fetchProfile(), fetchSettings()])
-        .then(([user, userSettings]) => {
-          setCurrentUser(user);
-          setSettings(userSettings);
-          setLanguage(userSettings.language || 'English');
-          setDarkMode(userSettings.dark_mode || false);
-          setIsAuthenticated(true);
-        })
-        .catch(() => {
-          localStorage.removeItem('electra_token');
-        });
-    }
-  }, []);
 
   const loadAllData = async () => {
     setLoading(true);
@@ -75,19 +55,7 @@ function App() {
   useEffect(() => { loadAllData(); }, []);
 
   if (!isAuthenticated) {
-    return (
-      <AuthPage 
-        onAuthSuccess={(userData) => { 
-          setCurrentUser(userData); 
-          if (userData.settings) {
-            setSettings(userData.settings);
-            setLanguage(userData.settings.language || 'English');
-            setDarkMode(userData.settings.dark_mode || false);
-          }
-          setIsAuthenticated(true); 
-        }} 
-      />
-    );
+    return <AuthPage onAuthSuccess={() => setIsAuthenticated(true)} />;
   }
 
   return (
@@ -141,7 +109,7 @@ function App() {
             {(currentView === 'Cost Optimization' || currentView === 'Finances') && <CostOptimization language={language} />}
             {currentView === 'Alerts' && <AlertsView language={language} settings={settings} />}
             {currentView === 'Profile' && (
-              <ProfileView onSignOut={() => { setIsAuthenticated(false); setCurrentUser(null); }} />
+              <ProfileView onSignOut={() => setIsAuthenticated(false)} />
             )}
             {currentView === 'Settings' && (
               <Settings 
