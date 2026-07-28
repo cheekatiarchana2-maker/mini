@@ -12,6 +12,5 @@ start cmd /k "cd /d %~dp0frontend && start_frontend.bat"
 
 echo Servers are starting! 
 echo Opening browser to: http://127.0.0.1:5173
-start 
+start http://127.0.0.1:5173
 pause
- http://127.0.0.1:5173

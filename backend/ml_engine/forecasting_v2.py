@@ -55,3 +55,4 @@ def forecast_consumption(df, periods=168):
         })
         
     return results
+ 
